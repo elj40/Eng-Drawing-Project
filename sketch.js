@@ -1,6 +1,8 @@
 var MOUSE_PRESSED, MOUSE_RELEASED, PRESSED_KEYS;	//Making clicks and keypresses global
 var STATEMACHINE;
 var CONSTRUCTIONS;
+var MODE_DISPLAY;
+var CYAN;
 
 MOUSE_PRESSED = false;
 MOUSE_RELEASED = false;
@@ -18,9 +20,14 @@ function windowResized() {
 function setup(){
 	const canvas = createCanvas(windowWidth, windowHeight-4);
 	canvas.elt.addEventListener("contextmenu", (e) => e.preventDefault())
+	MODE_DISPLAY = document.getElementById("toolbar");
+	
+	STATEMACHINE.add("normal", new NormalState());
 	STATEMACHINE.add("add_points", new AddPointsState());
 	STATEMACHINE.add("move_point", new MovePointState());
-	STATEMACHINE.change("add_points", {constructions: CONSTRUCTIONS});
+	STATEMACHINE.change("normal");
+	
+	CYAN = color(0, 255, 255);
 }
 
 function draw() {
@@ -44,6 +51,7 @@ function draw() {
 	RIGHT_MOUSE_PRESSED = false;
 	RIGHT_MOUSE_RELEASED = false;
 	PRESSED_KEYS = {};
+	TO_DELETE = [];
 }
 
 function mousePressed(evt) {

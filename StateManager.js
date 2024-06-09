@@ -11,6 +11,8 @@ class StateManager {
 		this.currentState.exit()
 		this.currentState = this.states[name];
 		this.currentState.enter(options);
+		
+		MODE_DISPLAY.innerText = name;
 	}
 	
 	add(name, state) {
@@ -20,6 +22,7 @@ class StateManager {
 		delete this.states[name];
 	}
 	update() {
+		if (PRESSED_KEYS['Escape']) this.change('normal');
 		this.currentState.update();
 	}
 	
