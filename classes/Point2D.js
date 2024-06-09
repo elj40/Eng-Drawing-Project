@@ -17,7 +17,7 @@ class Point2D extends Construction {
 	highlight() {
 		push();
 		noFill();
-		stroke(0, 255, 255);
+		stroke(CYAN);
 		strokeWeight(4);
 		circle(this.x,this.y, this.r+2);
 		pop();
