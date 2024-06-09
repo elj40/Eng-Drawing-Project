@@ -1,70 +1,62 @@
-var MOUSE_PRESSED, MOUSE_RELEASED, PRESSED_KEYS;
+var MOUSE_PRESSED, MOUSE_RELEASED, PRESSED_KEYS;	//Making clicks and keypresses global
+var STATEMACHINE;
+var CONSTRUCTIONS;
 
 MOUSE_PRESSED = false;
 MOUSE_RELEASED = false;
 PRESSED_KEYS = {};
 
-points = [];
-select_radius = 10;
+STATEMACHINE = new StateManager();
+
+CONSTRUCTIONS = [];
+TO_DELETE = [];
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight-4);
 }
 
 function setup(){
-	createCanvas(windowWidth, windowHeight-4);
+	const canvas = createCanvas(windowWidth, windowHeight-4);
+	canvas.elt.addEventListener("contextmenu", (e) => e.preventDefault())
+	STATEMACHINE.add("add_points", new AddPointsState());
+	STATEMACHINE.add("move_point", new MovePointState());
+	STATEMACHINE.change("add_points", {constructions: CONSTRUCTIONS});
 }
 
 function draw() {
 	background(255, 240, 220);
 	
-	//UPDATE
-	for (let i = 0; i < points.length; i++) {
-		points[i].update();
-		//implement this once statemachine has been built
-		if (MOUSE_PRESSED && distance(mouseX, mouseY,points[i].x,points[i].y) <= select_radius) changeState("move_point", {});
-	}
-	if (MOUSE_RELEASED && !closeToOtherPoint(mouseX,mouseY,select_radius)) {
-		points.push(new Point2D(mouseX, mouseY));
+	STATEMACHINE.update();
+	STATEMACHINE.display();
+	
+	for (let i = 0; i < CONSTRUCTIONS.length; i++) {
+		CONSTRUCTIONS[i].display();
 	}
 	
+	for (let i = CONSTRUCTIONS.length-1; i>=0; i--) {
+		for (let c of TO_DELETE) {
+			if (c == CONSTRUCTIONS[i]) CONSTRUCTIONS.splice(i,1);
+		}
+	}
 	
 	MOUSE_PRESSED = false;
 	MOUSE_RELEASED = false;
+	RIGHT_MOUSE_PRESSED = false;
+	RIGHT_MOUSE_RELEASED = false;
 	PRESSED_KEYS = {};
+}
+
+function mousePressed(evt) {
 	
-	//DRAW
-	for (let i = 0; i < points.length; i++) {
-		points[i].display()
-		if (distance(mouseX, mouseY,points[i].x,points[i].y) <= select_radius) points[i].highlight();
+	if (mouseButton === LEFT) MOUSE_PRESSED = true;
+	if (mouseButton === RIGHT) {
+		evt.preventDefault();
+		RIGHT_MOUSE_PRESSED = true;
 	}
-}
-
-function closeToOtherPoint(x,y,r) {
-	for (let p of points) {
-		dist_ = distance(x,y,p.x,p.y);
-		if (dist_ <= r) return true;
-		
-	}
-	
-	return false;
-}
-
-function changeState(s, options) {}
-
-function distance(x1,y1,x2,y2) {
-	let dx, dy;
-	dx = x1-x2;
-	dy = y1-y2;
-	d = sqrt(dx*dx + dy*dy);
-	return d;
-}
-
-function mousePressed() {
-	MOUSE_PRESSED = true;
 }
 function mouseReleased() {
-	MOUSE_RELEASED = true;
+	if (mouseButton === LEFT) MOUSE_RELEASED = true;
+	if (mouseButton === RIGHT) RIGHT_MOUSE_RELEASED = true;
 }
 function keyPressed() {
 	PRESSED_KEYS[key] = true;
