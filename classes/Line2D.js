@@ -1,5 +1,6 @@
-class Line extends Construction {
+class Line2D extends Construction {
 	constructor(A, B) {
+		super();
 		this.pointA = A;
 		this.pointB = B;
 		this.thickness = 4;
@@ -21,5 +22,13 @@ class Line extends Construction {
 		line(this.pointA.x,this.pointA.y,this.pointB.x,this.pointB.y);
 		this.display();
 		pop();
+	}
+	distance(x,y) {
+		let a,b,d;
+		a = hypoteneuse(x,y,this.pointA.x,this.pointA.y)
+		b = hypoteneuse(x,y,this.pointB.x,this.pointB.y)
+		d = hypoteneuse(this.pointA.x,this.pointA.y,this.pointB.x,this.pointB.y)
+		
+		return a+b-d;
 	}
 }

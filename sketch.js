@@ -24,6 +24,7 @@ function setup(){
 	
 	STATEMACHINE.add("normal", new NormalState());
 	STATEMACHINE.add("add_points", new AddPointsState());
+	STATEMACHINE.add("add_lines", new AddLineState());
 	STATEMACHINE.add("move_point", new MovePointState());
 	STATEMACHINE.change("normal");
 	

@@ -3,7 +3,7 @@ class Point2D extends Construction {
 		super();
 		this.x = x;
 		this.y = y;
-		this.r = 8;
+		this.r = 6;
 		this.name = ""
 	}
 	update() {
@@ -11,6 +11,7 @@ class Point2D extends Construction {
 	display() {
 		push();
 		fill(0);
+		strokeWeight(1);
 		circle(this.x, this.y, this.r);
 		pop();
 	}
@@ -21,6 +22,10 @@ class Point2D extends Construction {
 		strokeWeight(4);
 		circle(this.x,this.y, this.r+2);
 		pop();
+	}
+	
+	distance(x,y) {
+		return hypoteneuse(x,y,this.x,this.y);
 	}
 }
 	
