@@ -6,13 +6,14 @@ class AddPointsState extends BaseState {
 	}
 	enter(options) {
 		this.points = [];
-		this.points = this.pointsFromConstructions(CONSTRUCTIONS);
+		this.points = pointsFromConstructions(CONSTRUCTIONS);
 	}
 	update() {
 		for (let i = 0; i < this.points.length; i++) {
 			this.points[i].update();
-			//implement this once statemachine has been built
-			if (MOUSE_PRESSED && distance(mouseX, mouseY,CONSTRUCTIONS[i].x,CONSTRUCTIONS[i].y) <= this.select_radius) STATEMACHINE.change("move_point", {selected: this.points[i], previousState: this.name});
+			if (MOUSE_PRESSED && hypoteneuse(mouseX, mouseY,CONSTRUCTIONS[i].x,CONSTRUCTIONS[i].y) <= this.select_radius) {
+				STATEMACHINE.change("move_point", {selected: this.points[i], previousState: this.name});
+			}
 		}
 		if (MOUSE_RELEASED && !this.closeToOtherPoint(mouseX,mouseY,this.select_radius)) {
 			let p = new Point2D(mouseX, mouseY);
@@ -24,23 +25,15 @@ class AddPointsState extends BaseState {
 
 		
 		for (let i = 0; i < this.points.length; i++) {
-			if (distance(mouseX, mouseY,this.points[i].x,this.points[i].y) <= this.select_radius) this.points[i].highlight();
+			if (hypoteneuse(mouseX, mouseY,this.points[i].x,this.points[i].y) <= this.select_radius) this.points[i].highlight();
 		}
 	}
 	closeToOtherPoint(x,y,r) {
-		for (let p of CONSTRUCTIONS) {
-			let dist_ = distance(x,y,p.x,p.y);
+		for (let p of this.points) {
+			let dist_ = hypoteneuse(x,y,p.x,p.y);
 			if (dist_ <= r) return true;
 		}
-		
 		return false;
-	}
-	pointsFromConstructions(cnstr) {
-		let points = [];
-		for (let c of cnstr) {
-			if (c instanceof Point2D) points.push(c);
-		}
-		return points;
 	}
 }
 function changeState(s, options) {}
