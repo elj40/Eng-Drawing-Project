@@ -27,6 +27,6 @@ class NormalState extends BaseState {
 	
 	enter_edit_mode(c) {
 		if (c instanceof Point2D) STATEMACHINE.change("move_point", {selected: c, previousState: this.name});
-		else if (c instanceof Line2D) STATEMACHINE.change("edit_line", {selected: c});
+		else if (c instanceof Line2D) STATEMACHINE.change("edit_line", {selected: c, previousState: this.name});
 	}
 }
