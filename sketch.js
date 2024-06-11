@@ -26,6 +26,7 @@ function setup(){
 	STATEMACHINE.add("add_points", new AddPointsState());
 	STATEMACHINE.add("add_lines", new AddLineState());
 	STATEMACHINE.add("move_point", new MovePointState());
+	STATEMACHINE.add("edit_line", new EditLineState());
 	STATEMACHINE.change("normal");
 	
 	CYAN = color(0, 255, 255);

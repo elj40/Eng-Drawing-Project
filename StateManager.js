@@ -12,6 +12,8 @@ class StateManager {
 		this.currentState = this.states[name];
 		this.currentState.enter(options);
 		
+		console.log("Switched to state: " +name);
+		
 		MODE_DISPLAY.innerText = name;
 	}
 	

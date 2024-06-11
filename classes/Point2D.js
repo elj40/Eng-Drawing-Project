@@ -1,6 +1,6 @@
 class Point2D extends Construction {
-	constructor(x,y) {
-		super();
+	constructor(x,y, p) {
+		super(p);
 		this.x = x;
 		this.y = y;
 		this.r = 6;

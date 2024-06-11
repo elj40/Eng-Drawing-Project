@@ -1,5 +1,7 @@
 class Construction {
-	constructor() {}
+	constructor(p = null) {
+		this.parent = p;
+	}
 	update() {}
 	display() {}
 }
