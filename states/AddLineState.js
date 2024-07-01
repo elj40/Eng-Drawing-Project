@@ -16,31 +16,35 @@ class AddLineState extends BaseState {
 				this.points[i].update();
 				if (MOUSE_PRESSED && this.points[i].distance(mouseX, mouseY) <= this.select_radius) {
 					this.line = new Line2D();
-					this.line.pointA = this.points[i];
-					this.line.pointB = new Point2D(mouseX, mouseY);
+					this.line.children.push(this.points[i]);
+					this.line.children.push(new Point2D(mouseX, mouseY, this.line));
 					CONSTRUCTIONS.push(this.line);
 				}
 			}
 			if (MOUSE_PRESSED && !this.closeToOtherPoint(mouseX,mouseY,this.select_radius)) {
 				this.line = new Line2D();
-				this.line.pointA = new Point2D(mouseX, mouseY, this.line);
-				this.points.push(this.line.pointA);
-				CONSTRUCTIONS.push(this.line.pointA);
-				this.line.pointB = new Point2D(mouseX, mouseY, this.line);
+				let pointA = new Point2D(mouseX, mouseY, this.line)
+				let pointB = new Point2D(mouseX, mouseY, this.line)
+
+				this.line.children.push(pointA);
+				this.line.children.push(pointB);
+
+				this.points.push(pointA);
+				CONSTRUCTIONS.push(pointA);
 				CONSTRUCTIONS.push(this.line);
 			}
 		}else {
-			this.line.pointB.x = mouseX;
-			this.line.pointB.y = mouseY;
+			this.line.children[1].x = mouseX;
+			this.line.children[1].y = mouseY;
 			for (let i = 0; i < this.points.length; i++) {
 				this.points[i].update();
 				if (MOUSE_RELEASED && this.points[i].distance(mouseX, mouseY) <= this.select_radius) {
-					this.line.pointB = this.points[i];
+					this.line.children[1] = this.points[i];
 					STATEMACHINE.change("add_lines");
 				}
 			}
 			if (MOUSE_RELEASED && !this.closeToOtherPoint(mouseX,mouseY,this.select_radius)) {
-				CONSTRUCTIONS.push(this.line.pointB);
+				CONSTRUCTIONS.push(this.line.children[1]);
 				STATEMACHINE.change("add_lines");
 			}
 		}

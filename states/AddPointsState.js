@@ -36,4 +36,3 @@ class AddPointsState extends BaseState {
 		return false;
 	}
 }
-function changeState(s, options) {}

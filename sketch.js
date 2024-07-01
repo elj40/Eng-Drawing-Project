@@ -11,6 +11,9 @@ PRESSED_KEYS = {};
 STATEMACHINE = new StateManager();
 
 CONSTRUCTIONS = [];
+POINTS_ARR = [];
+LINES_ARR = [];
+ARCS_ARR = [];
 TO_DELETE = [];
 
 function windowResized() {
@@ -44,7 +47,9 @@ function draw() {
 	
 	for (let i = CONSTRUCTIONS.length-1; i>=0; i--) {
 		for (let c of TO_DELETE) {
-			if (c == CONSTRUCTIONS[i]) CONSTRUCTIONS.splice(i,1);
+			if (c == CONSTRUCTIONS[i]) {
+				CONSTRUCTIONS.splice(i,1);
+			}
 		}
 	}
 	
