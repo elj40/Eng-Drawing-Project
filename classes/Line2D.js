@@ -7,13 +7,12 @@ class Line2D extends Construction {
 		}else {
 			console.log('Line created without children, add points later');
 		}
-		this.thickness = 4;
 	}
 	
 	update() {}
 	display() {
 		push()
-		strokeWeight(this.thickness);
+		strokeWeight(this.weight);
 		this.children[0].display();
 		this.children[1].display();
 		line(this.children[0].x,this.children[0].y,this.children[1].x,this.children[1].y);
@@ -22,7 +21,7 @@ class Line2D extends Construction {
 	highlight() {
 		push()
 		stroke(CYAN);
-		strokeWeight(this.thickness+2);
+		strokeWeight(this.weight+2);
 		line(this.children[0].x,this.children[0].y,this.children[1].x,this.children[1].y);
 		this.display();
 		pop();

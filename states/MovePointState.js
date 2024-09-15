@@ -20,14 +20,15 @@ class MovePointState extends BaseState {
 		
 		if (MOUSE_RELEASED) {
 			let other_point = this.closeToOtherPoint(mouseX,mouseY, 10)
-			console.log(other_point)
-			if (other_point) this.handlePointCollapse(other_point)
-
-			this.pointDeleted = true;
+			console.log("Point in range? ", other_point)
+			if (other_point) {
+				this.handlePointCollapse(other_point)
+				this.pointDeleted = true;
+			}
 			STATEMACHINE.change(this.previousState);
 		}
 		if (PRESSED_KEYS['d']) {
-			TO_DELETE.push(this.point);
+			this.point.destroy();
 			this.pointDeleted = true;
 		}
 	}
@@ -45,12 +46,11 @@ class MovePointState extends BaseState {
 	handlePointCollapse(other_point) {
 		if (this.point.parent) {
 			let pa = this.point.parent;
-			for (let i = 0; i < pa.children.length; i++) {
-				if (pa.children[i] === this.point) pa.children[i] = other_point;
-
-			}
+			const point_index = pa.children.indexOf(this.point)
+			pa.children.splice(point_index, 1)
 		}
-
-		TO_DELETE.push(this.point)
+		console.log(CONSTRUCTIONS)
+		this.point.destroy();
+		console.log(CONSTRUCTIONS)
 	}
 }

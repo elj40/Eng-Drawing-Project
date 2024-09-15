@@ -3,7 +3,6 @@ class Point2D extends Construction {
 		super(p);
 		this.x = x;
 		this.y = y;
-		this.r = 6;
 		this.name = ""
 	}
 	update() {
@@ -12,7 +11,7 @@ class Point2D extends Construction {
 		push();
 		fill(0);
 		strokeWeight(1);
-		circle(this.x, this.y, this.r);
+		circle(this.x, this.y, this.weight);
 		pop();
 	}
 	highlight() {
@@ -20,7 +19,7 @@ class Point2D extends Construction {
 		noFill();
 		stroke(CYAN);
 		strokeWeight(4);
-		circle(this.x,this.y, this.r+2);
+		circle(this.x,this.y, this.weight+2);
 		pop();
 	}
 	

@@ -7,6 +7,7 @@ class AddPointsState extends BaseState {
 	enter(options) {
 		this.points = [];
 		this.points = pointsFromConstructions(CONSTRUCTIONS);
+		
 	}
 	update() {
 		for (let i = 0; i < this.points.length; i++) {
@@ -22,8 +23,6 @@ class AddPointsState extends BaseState {
 		}
 	}
 	display() {
-
-		
 		for (let i = 0; i < this.points.length; i++) {
 			if (hypoteneuse(mouseX, mouseY,this.points[i].x,this.points[i].y) <= this.select_radius) this.points[i].highlight();
 		}
